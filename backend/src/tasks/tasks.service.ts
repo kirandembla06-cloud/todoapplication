@@ -25,14 +25,16 @@ export class TasksService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} task`;
+    return this.tasksRepository.findOneBy({ id });
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: number, updateTaskDto: UpdateTaskDto) {
+    await this.tasksRepository.update(id, updateTaskDto);
+    return this.tasksRepository.findOneBy({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number) {
+    await this.tasksRepository.delete(id);
+    return { deleted: true };
   }
 }
